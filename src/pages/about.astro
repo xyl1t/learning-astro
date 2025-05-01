@@ -1,24 +1,61 @@
 ---
 
+import '../styles/global.css';
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pageTitle = "About me";
+
+const identity = {
+  firstName: "Sarah",
+  country: "Canada",
+  occupation: "Technical Writer",
+  hobbies: ["photography", "birdwatching", "baseball"],
+};
+
+const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+
+const skillColor = "green";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-    <body>
+<BaseLayout pageTitle={pageTitle}>
 
-        <a href="/">Home</a>
-        <a href="/about/">About</a>
-        <a href="/blog/">Blog</a>
+  <!-- is:global makes the style affect the whole page, and not just this
+    sectino of code -->
+<style is:global define:vars={{skillColor}}>
+  h1 {
+    color: purple;
+    font-size: 4rem;
+  }
+  .skill {
+    color: var(--skillColor);
+    font-weight: bold;
+  }
+</style>
 
-        <h1>My Astro Site</h1>
-        <h1>My Astro Learning Blog</h1>
-        <p>This is where I will post about my journey learning Astro.</p>
+  <p>This is where I will post about my journey learning Astro.</p>
 
-    </body>
-</html>
+  <p>Here are a few infos:</p>
+
+  <ul>
+    <li>My name is {identity.firstName}</li>
+    <li>I live in {identity.country} and I work as a {identity.occupation}.</li>
+    {identity.hobbies.length >= 2 &&
+    <li>Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}</li>
+    }
+  </ul>
+
+  <p>My skills are:</p>
+  <ul>
+    {skills.map(skill => <li class="skill">{skill}</li>)}
+  </ul>
+
+
+  { happy && <p>I'm happy with astro</p> }
+  { finished && <p>I'm not finished with the tutorial</p> }
+  { finished && <p>I'm not finished with the tutorial</p> }
+  { goal == 3 ? <p>test</p>: <p>I'm not finished with the tutorial</p> }
+</BaseLayout>
